@@ -10,15 +10,7 @@ export default function App() {
   return (
     <div>
       <Steps />
-      <StepMessage step={1}>
-        <p>Pass in content</p>
-        <span>🙆</span>
-      </StepMessage>
-      <StepMessage step={2}>
-        <p>Read children prop</p>
-        <span>😏</span>
-      </StepMessage>
-      {/* <Steps /> */}
+      <Steps />
     </div>
   );
 }
@@ -70,51 +62,30 @@ function Steps() {
             <div className={step >= 3 ? "active" : ""}>3</div>
           </div>
 
-          <StepMessage step={step}>
-            {messages[step - 1]}
-            <div className="buttons">
-              <Button
-                textColor="#fff"
-                bgColor="#000"
-                onClick={() => alert(`Learn how to ${messages[step - 1]}`)}
-              >
-                Learn how
-              </Button>
-            </div>
-          </StepMessage>
+          <p className="message">
+            Step {step}: {messages[step - 1]}
+            {/*test.name*/}
+          </p>
 
           <div className="buttons">
-            <Button textColor="#fff" bgColor="#7950f2" onClick={handlePrevious}>
-              <span>👈</span>Previous
-            </Button>
-            <Button textColor="#fff" bgColor="#7950f2" onClick={handleNext}>
-              Next<span>👉</span>
-            </Button>
+            {/* Instead of EventListener (buton.addEventListener(click, ())), we use onClick directly on the button in JSX (React)
+        The are no function calls, but really function -> thats why we have to have another callback function instead of simply write alert(...)
+        And only pass the function value and do not call the function () (handlenext not handlenext()) otherwise the functions get executed right away*/}
+            <button
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
+              onClick={handlePrevious}
+            >
+              Previous
+            </button>
+            <button
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
+              onClick={handleNext}
+            >
+              Next
+            </button>
           </div>
         </div>
       )}
     </div>
-  );
-}
-
-//With CHILDREN PROP (Reserved prop from React!!!) For reusable components
-//Children prop is like a hole that can be filled in to really customize the components and reuse the components
-function StepMessage({ step, children }) {
-  return (
-    <div className="message">
-      <h3>Step {step}</h3>
-      <p>{children}</p>
-    </div>
-  );
-}
-
-function Button({ textColor, bgColor, onClick, children }) {
-  return (
-    <button
-      style={{ backgroundColor: bgColor, color: textColor }}
-      onClick={onClick}
-    >
-      {children}
-    </button>
   );
 }
